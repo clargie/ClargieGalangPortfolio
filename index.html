@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clargie Galang | Senior Technical Support & Solutions Engineer</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom subtle grid background & smooth transitions */
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(99, 102, 241, 0.14) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .dark .bg-grid-pattern {
+            background-image: radial-gradient(rgba(129, 140, 248, 0.12) 1px, transparent 1px);
+        }
+        .fade-in {
+            animation: fadeIn 0.35s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white transition-colors duration-200">
+
+    <!-- Toast Notification Container -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 hidden transform transition-all duration-300 translate-y-2 opacity-0">
+        <div class="flex items-center gap-3 bg-slate-900 dark:bg-slate-800 text-white px-4 py-3 rounded-xl shadow-2xl border border-slate-700">
+            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </span>
+            <p id="toast-message" class="text-sm font-medium">Copied to clipboard!</p>
+        </div>
+    </div>
+
+    <!-- Sticky Navigation Bar -->
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/80 dark:border-slate-800/80">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2.5 group">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-600 to-emerald-500 flex items-center justify-center text-white font-bold font-mono text-sm shadow-md group-hover:scale-105 transition-transform">
+                    CG
+                </div>
+                <div>
+                    <span class="font-bold text-slate-900 dark:text-white tracking-tight block leading-none">Clargie Galang</span>
+                    <span class="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 flex items-center gap-1 mt-0.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        Available for Support & Solutions Roles
+                    </span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-600 dark:text-slate-300">
+                <a href="#experience" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Experience</a>
+                <a href="#skills" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Tech Stack</a>
+                <a href="#education" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Education</a>
+            </nav>
+
+            <!-- Action Controls -->
+            <div class="flex items-center gap-2">
+                <button id="theme-toggle" aria-label="Toggle Dark Mode" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100/70 dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-slate-800 transition-colors">
+                    <!-- Sun icon (shown in dark mode) -->
+                    <svg id="sun-icon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <!-- Moon icon (shown in light mode) -->
+                    <svg id="moon-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+                <a href="mailto:clargiegalang@gmail.com" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium shadow-sm transition-all">
+                    <span>Contact</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-grid-pattern border-b border-slate-200/80 dark:border-slate-800/80">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800/60 text-indigo-700 dark:text-indigo-300 text-xs font-mono font-medium mb-6">
+                    <span>Interactive Candidate Portfolio</span>
+                    <span class="text-indigo-400">•</span>
+                    <span>Built with AI</span>
+                </div>
+
+                <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]">
+                    Clargie Galang
+                </h1>
+                <p class="mt-3 text-lg sm:text-2xl font-semibold text-indigo-600 dark:text-indigo-400">
+                    Tier 1 to Tier 2 Technical Support &amp; Solutions Engineer
+                </p>
+                <p class="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                    Bridging enterprise customers, SaaS platforms, and engineering teams. Over 11 years of experience resolving Tier 1 to Tier 2 technical escalations, designing enterprise no-code workflows, analyzing production logs &amp; SQL databases, and driving customer satisfaction.
+                </p>
+
+                <!-- Contact Meta Pills -->
+                <div class="mt-6 flex flex-wrap items-center gap-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                        <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        Cabiao, Nueva Ecija / Pasig City, PH
+                    </span>
+                    <button onclick="copyText('clargiegalang@gmail.com', 'Email copied to clipboard!')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500 transition-colors cursor-pointer">
+                        <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        clargiegalang@gmail.com
+                    </button>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                        <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                        +63 915 902 6035
+                    </span>
+                    <a href="https://www.linkedin.com/in/clargiegalang" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500 text-indigo-600 dark:text-indigo-400 font-medium transition-colors">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+                        in/clargiegalang
+                    </a>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="mt-8 flex flex-wrap items-center gap-3">
+                    <a href="#experience" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-lg shadow-indigo-600/20 transition-all">
+                        View Experience
+                    </a>
+                    <a href="#skills" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 font-semibold text-sm transition-all">
+                        Explore Tech Stack
+                    </a>
+                    <button id="copy-pitch-btn" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 font-medium text-sm transition-all cursor-pointer">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                        Copy Executive Summary
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-16 sm:py-20 bg-slate-100/70 dark:bg-slate-900/40 border-b border-slate-200/80 dark:border-slate-800/80">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+                <div>
+                    <span class="text-xs font-mono font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Work History</span>
+                    <h2 class="mt-1 text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Experience</h2>
+                    <p class="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-400">
+                        Progressive career spanning Enterprise SaaS Solutions, Tier 1 to Tier 2 Application Support, and Cloud/Linux Infrastructure.
+                    </p>
+                </div>
+
+                <!-- Filter Buttons -->
+                <div class="inline-flex p-1 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 self-start">
+                    <button onclick="filterExperience('all')" id="exp-filter-all" class="exp-filter px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white transition-all cursor-pointer">
+                        All Roles (6)
+                    </button>
+                    <button onclick="filterExperience('saas')" id="exp-filter-saas" class="exp-filter px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer">
+                        SaaS &amp; Solutions
+                    </button>
+                    <button onclick="filterExperience('infra')" id="exp-filter-infra" class="exp-filter px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer">
+                        Infra &amp; Payments
+                    </button>
+                </div>
+            </div>
+
+            <!-- Experience Cards Grid -->
+            <div class="space-y-5" id="experience-list">
+                <!-- Role 1: Checkbox -->
+                <article data-category="saas" class="exp-card p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-indigo-400/70 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Senior Technical Support Associate</h3>
+                                <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">Checkbox</span>
+                            </div>
+                            <p class="text-xs font-mono text-slate-500 dark:text-slate-400 mt-1">Enterprise No-Code Workflow Platform • Pre-Sales &amp; Tier 1 to Tier 2 Support</p>
+                        </div>
+                        <span class="text-xs font-mono font-semibold px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 self-start">
+                            Apr 2024 – May 2026
+                        </span>
+                    </div>
+                    <ul class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2.5 text-sm text-slate-600 dark:text-slate-300">
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 font-bold mt-0.5">✓</span>
+                            <span>Managed a substantial portion of support tickets while reflecting <strong>excellent customer satisfaction and service quality</strong>.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 font-bold mt-0.5">✓</span>
+                            <span>Scoped, designed, and delivered <strong>enterprise-grade solutions</strong> integrating across multiple business systems.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 font-bold mt-0.5">✓</span>
+                            <span>Partnered on <strong>pre-sale technical discovery &amp; technical close</strong> activities and guided implementation partners.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 font-bold mt-0.5">✓</span>
+                            <span>Acted as primary bridge between customers and Engineering while streamlining ticket triage and Knowledge Base docs.</span>
+                        </li>
+                    </ul>
+                </article>
+
+                <!-- Role 2: 15Five -->
+                <article data-category="saas" class="exp-card p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-indigo-400/70 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Technical Support Engineer</h3>
+                                <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">15Five (CA, USA)</span>
+                            </div>
+                            <p class="text-xs font-mono text-slate-500 dark:text-slate-400 mt-1">B2B SaaS HR Platform • Service Cloud, Django, Sentry &amp; Jira</p>
+                        </div>
+                        <span class="text-xs font-mono font-semibold px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 self-start">
+                            Oct 2023 – Apr 2024
+                        </span>
+                    </div>
+                    <ul class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2.5 text-sm text-slate-600 dark:text-slate-300">
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 font-bold mt-0.5">✓</span>
+                            <span>Troubleshot complex application bugs via <strong>Django logs and Sentry</strong>, escalating clean bug reports in <strong>Jira</strong>.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 font-bold mt-0.5">✓</span>
+                            <span>Handled escalated omnichannel support (chat, email, live video calls) via <strong>Salesforce Service Cloud</strong>.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 font-bold mt-0.5">✓</span>
+                            <span>Delivered technical configuration and customization for <strong>VIP enterprise accounts</strong>.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 font-bold mt-0.5">✓</span>
+                            <span>Continuously met team <strong>response time, quality score, and SLA</strong> benchmarks.</span>
+                        </li>
+                    </ul>
+                </article>
+
+                <!-- Role 3: Mobile-Technologies -->
+                <article data-category="infra" class="exp-card p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-indigo-400/70 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">L1 Monitoring and Support Engineer</h3>
+                                <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">Mobile-Technologies (Thailand)</span>
+                            </div>
+                            <p class="text-xs font-mono text-slate-500 dark:text-slate-400 mt-1">Telecom Systems • Major Incident Management, Oracle &amp; RHEL Unix</p>
+                        </div>
+                        <span class="text-xs font-mono font-semibold px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 self-start">
+                            Sept 2022 – Sept 2023
+                        </span>
+                    </div>
+                    <ul class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2.5 text-sm text-slate-600 dark:text-slate-300">
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 font-bold mt-0.5">✓</span>
+                            <span>Executed real-time system monitoring, rapid service restoration, and <strong>Root Cause Analysis (RCA)</strong> within strict SLAs.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 font-bold mt-0.5">✓</span>
+                            <span>Maintained and monitored <strong>Unix/RHEL servers (Physical &amp; VM)</strong> and collaborated closely with L2/L3 engineers.</span>
+                        </li>
+                    </ul>
+                </article>
+
+                <!-- Role 4: IDEMIA -->
+                <article data-category="infra" class="exp-card p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-indigo-400/70 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Technical Support Engineer / EMV Developer</h3>
+                                <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">IDEMIA Philippines</span>
+                            </div>
+                            <p class="text-xs font-mono text-slate-500 dark:text-slate-400 mt-1">FinTech &amp; Payment Security • SQL, Unix, EMV Card Readers &amp; CPS</p>
+                        </div>
+                        <span class="text-xs font-mono font-semibold px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 self-start">
+                            Sept 2017 – Sept 2022
+                        </span>
+                    </div>
+                    <ul class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2.5 text-sm text-slate-600 dark:text-slate-300">
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 font-bold mt-0.5">✓</span>
+                            <span>Coordinated international technical troubleshooting for EMV hardware, <strong>enhancing support efficiency by 20%</strong>.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 font-bold mt-0.5">✓</span>
+                            <span>Delivered end-to-end technical support using deep <strong>SQL expertise</strong>, Unix diagnostics, and CPS electrical profile development.</span>
+                        </li>
+                    </ul>
+                </article>
+
+                <!-- Role 5 & 6: NEC Philippines -->
+                <article data-category="infra" class="exp-card p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-indigo-400/70 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Systems Engineer &amp; Cloud Support Engineer</h3>
+                                <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">NEC Philippines Inc.</span>
+                            </div>
+                            <p class="text-xs font-mono text-slate-500 dark:text-slate-400 mt-1">Cloud IaaS &amp; Enterprise Infrastructure • Zabbix, Linux Shell Scripting &amp; L2/L3 Support</p>
+                        </div>
+                        <span class="text-xs font-mono font-semibold px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 self-start">
+                            Jun 2015 – Jun 2017
+                        </span>
+                    </div>
+                    <ul class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2.5 text-sm text-slate-600 dark:text-slate-300">
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 font-bold mt-0.5">✓</span>
+                            <span>Monitored and analyzed system applications with <strong>Zabbix, decreasing overall downtime by 20%</strong>.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 font-bold mt-0.5">✓</span>
+                            <span>Provided Tier 1 to Tier 2 Cloud IaaS support across Linux/Windows servers, shell scripting automation, and 24/7 on-call rotations.</span>
+                        </li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Stack Matrix -->
+    <section id="skills" class="py-16 sm:py-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+            <div>
+                <span class="text-xs font-mono font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Tools &amp; Platforms</span>
+                <h2 class="mt-1 text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Technical Stack Matrix</h2>
+                <p class="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-400">
+                    Quickly filter my hands-on tooling across CRM/Ticketing, Observability, Databases, OS/Virtualization, Hardware/Payments, Billing, Remote Support, and Collaboration platforms.
+                </p>
+            </div>
+            <!-- Live Search Box -->
+            <div class="relative w-full md:w-72">
+                <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <input type="text" id="skill-search" placeholder="Filter tools (e.g. Sentry, SQL, Jira)..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5" id="skills-grid">
+            <!-- Category 1 -->
+            <div class="skill-group p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <h3 class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+                    Ticketing &amp; CRM Systems
+                </h3>
+                <div class="mt-3.5 flex flex-wrap gap-2">
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Zendesk</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Salesforce</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Jira</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">OTRS</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">HubSpot</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Zoho</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Intercom</span>
+                </div>
+            </div>
+
+            <!-- Category 2 -->
+            <div class="skill-group p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <h3 class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    Monitoring &amp; Observability
+                </h3>
+                <div class="mt-3.5 flex flex-wrap gap-2">
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Datadog</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Sentry</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Zabbix</span>
+                </div>
+            </div>
+
+            <!-- Category 3 -->
+            <div class="skill-group p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <h3 class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+                    Databases &amp; Data Analysis
+                </h3>
+                <div class="mt-3.5 flex flex-wrap gap-2">
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Microsoft SQL</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">MySQL</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Oracle SQL</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Microsoft Excel</span>
+                </div>
+            </div>
+
+            <!-- Category 4 -->
+            <div class="skill-group p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <h3 class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    Operating Systems &amp; Virtualization
+                </h3>
+                <div class="mt-3.5 flex flex-wrap gap-2">
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Linux</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Unix</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Windows</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">macOS</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">VMware ESXi</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Microsoft Hyper-V</span>
+                </div>
+            </div>
+
+            <!-- Category 5 -->
+            <div class="skill-group p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <h3 class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+                    Hardware &amp; Payment Systems
+                </h3>
+                <div class="mt-3.5 flex flex-wrap gap-2">
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Servers</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Routers</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Desktops &amp; Laptops</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Printers</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">EMV Card Readers</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">MPOS</span>
+                </div>
+            </div>
+
+            <!-- Category 6 -->
+            <div class="skill-group p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <h3 class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    Billing Platforms
+                </h3>
+                <div class="mt-3.5 flex flex-wrap gap-2">
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Chargebee</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Paddle</span>
+                </div>
+            </div>
+
+            <!-- Category 7 -->
+            <div class="skill-group p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <h3 class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+                    Remote Support &amp; Diagnostics
+                </h3>
+                <div class="mt-3.5 flex flex-wrap gap-2">
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">TeamViewer</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">AnyDesk</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Chrome Remote Desktop</span>
+                </div>
+            </div>
+
+            <!-- Category 8 -->
+            <div class="skill-group p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <h3 class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    Enterprise Collaboration &amp; Productivity
+                </h3>
+                <div class="mt-3.5 flex flex-wrap gap-2">
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Microsoft 365</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Google Workspace</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Confluence</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">SharePoint</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Nuclino</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Microsoft Teams</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Slack</span>
+                    <span class="skill-badge px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Zoom</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education & Call to Action Footer -->
+    <footer id="education" class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex flex-col gap-6">
+                <!-- Education Card -->
+                <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                    <span class="text-xs font-mono font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Education</span>
+                    <h3 class="mt-1 text-lg font-bold text-slate-900 dark:text-white">Bachelor of Science in Information Technology</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 mt-1">STI College Global City • Taguig City, Philippines</p>
+                    <p class="text-xs font-mono text-slate-500 dark:text-slate-400 mt-2">Graduated May 2015</p>
+                </div>
+
+                <!-- Hire / Connect Box -->
+                <div class="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-indigo-600 to-indigo-800 text-white shadow-lg">
+                    <h3 class="text-xl font-bold">Ready to elevate your Customer &amp; Technical Support?</h3>
+                    <p class="mt-2 text-sm text-indigo-100 leading-relaxed max-w-3xl">
+                        Whether you need a Senior Technical Support Engineer who can debug production stack traces or a Solutions Associate who drives enterprise adoption, let's connect.
+                    </p>
+                    <div class="mt-5 flex flex-wrap gap-3">
+                        <a href="mailto:clargiegalang@gmail.com" class="px-4 py-2.5 rounded-xl bg-white text-indigo-700 hover:bg-indigo-50 font-semibold text-sm transition-colors">
+                            Email Clargie
+                        </a>
+                        <a href="https://www.linkedin.com/in/clargiegalang" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-indigo-500/40 hover:bg-indigo-500/60 border border-indigo-300/30 text-white font-semibold text-sm transition-colors">
+                            Connect on LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-2">
+                <span>© Clargie Galang</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Application Logic -->
+    <script>
+        // Experience Filter Logic
+        function filterExperience(category) {
+            document.querySelectorAll('.exp-filter').forEach(btn => {
+                btn.className = "exp-filter px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer";
+            });
+            const activeBtn = document.getElementById(`exp-filter-${category}`);
+            activeBtn.className = "exp-filter px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white transition-all cursor-pointer";
+
+            document.querySelectorAll('.exp-card').forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.classList.remove('hidden');
+                    card.classList.add('fade-in');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // Skill Search Filter
+        document.getElementById('skill-search').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            document.querySelectorAll('.skill-group').forEach(group => {
+                let hasVisibleBadge = false;
+                group.querySelectorAll('.skill-badge').forEach(badge => {
+                    const match = badge.textContent.toLowerCase().includes(query);
+                    badge.style.display = match ? 'inline-block' : 'none';
+                    if (match) hasVisibleBadge = true;
+                });
+                group.style.display = hasVisibleBadge ? 'block' : 'none';
+            });
+        });
+
+        // Copy Executive Pitch
+        document.getElementById('copy-pitch-btn').addEventListener('click', () => {
+            const pitch = `Clargie Galang — Tier 1 to Tier 2 Technical Support & Solutions Engineer\n• Over 11 years of experience across SaaS Technical Support, Pre-Sales Solutions, and Cloud/Linux Infrastructure (Checkbox, 15Five, Mobile-Technologies, IDEMIA, NEC).\n• Proven track record cutting system downtime by 20% via Zabbix, improving EMV support efficiency by 20%, and bridging Enterprise Customers & Engineering.\n• Contact: clargiegalang@gmail.com | +639159026035 | linkedin.com/in/clargiegalang`;
+            copyText(pitch, 'Executive summary copied to clipboard!');
+        });
+
+        // Reliable Clipboard Helper (works inside sandboxed iframes)
+        function copyText(text, successMsg) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast(successMsg);
+            } catch (err) {
+                showToast('Unable to copy automatically.');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        // Toast Notification
+        let toastTimeout;
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = message;
+            toast.classList.remove('hidden');
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            });
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.classList.add('hidden'), 300);
+            }, 2600);
+        }
+
+        // Dark / Light Mode Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+
+        // Default to dark mode for a sleek engineering feel, or respect system preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark');
+            sunIcon.classList.toggle('hidden', !isDark);
+            moonIcon.classList.toggle('hidden', isDark);
+        });
+    </script>
+</body>
+</html>
